@@ -7,12 +7,20 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 export default defineConfig({
-  plugins: [react(), eslint()],
+  plugins: [react(), { // do not fail on serve (i.e. local development)
+    ...eslint({
+      failOnWarning: false,
+      failOnError: false,
+    }),
+    apply: 'serve',
+    enforce: 'post'
+  }],
   // Used to resolve alias in absolute paths in vite
   resolve: {
     alias: [
-      { find: '~', replacement: path.resolve(__dirname,'./client/src'), },
-      { find: 'components', replacement: path.resolve(__dirname,'./client/src/components') }
+      { find: '~', replacement: path.resolve(__dirname,'./src'), },
+      { find: 'components', replacement: path.resolve(__dirname, './src/components') },
+      { find: 'views', replacement: path.resolve(__dirname, './src/views') },
     ]
   },
   css: {

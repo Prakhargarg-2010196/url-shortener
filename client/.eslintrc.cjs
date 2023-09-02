@@ -1,3 +1,4 @@
+const path = require('path');// used for path resolution 
 module.exports = {
   root: true,
   env: { browser: true, es2020: true },
@@ -8,18 +9,16 @@ module.exports = {
   parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
   settings: {
     react: { version: '18.2' },
-     'import/resolver': {
-      node: {
+     'import/resolver': {  
+       node: {
          extensions: ['.js', '.jsx'],
-        //  includes the modules from these directories
-         moduleDirectory: ['node_modules','./client/src'],
        },
-      //  Used to give aliases to absolute paths and resolve them 
-      //  alias: {
-      //    extensions: [".js",".jsx"],
-      //    map: [["~", "./src"]]
-      //  }
-       
+       alias: [
+         ['~', path.resolve(__dirname, './src')],
+         ['views',path.resolve(__dirname,'./src/views')]
+       ],
+        
+     
     },
   },
   plugins: ['react-refresh'],
